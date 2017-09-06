@@ -18,7 +18,7 @@ Implement a translator which generates a direct graph with a text file.
         <code> A hash table... (To be modified) </code>
         
     2. Methods:
-        1. **[Constructor]**Read in a file and translate it into a direct graph.
+        1. [**Constructor**]Read in a file and translate it into a direct graph.
         
             **Interface:**
             
