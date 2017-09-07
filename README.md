@@ -12,10 +12,10 @@ Implement a translator which generates a direct graph with a text file.
         * **-h** Print the help text.
         * **NONE** Print the help text.
 
-2. Directed graph class (DirectedGraph.java)
+2. Words graph class (WordsGraph.java)
     1. Data member:
     
-        <code> A hash table... (To be modified) </code>
+        <code> DirectedGraph<String, Integer> aGraph;  </code>
         
     2. Methods:
         1. [**Constructor**]Read in a file and translate it into a direct graph.
@@ -24,7 +24,7 @@ Implement a translator which generates a direct graph with a text file.
             
             |     Name    | Parameter Type | Return Value Type |
             |:-----------:|:--------------:|:-----------------:|
-            | DirectedGraph |     String     |         -         |
+            |  WordsGraph |     String     |         -         |
 
         2. Show the graph and save it as a new picture file.
          
