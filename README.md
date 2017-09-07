@@ -16,6 +16,7 @@ Implement a translator which generates a direct graph with a text file.
     1. Data member:
     
         <code> DirectedGraph<String, Integer> aGraph;  </code>
+        The graph class is from [this project](https://github.com/jgrapht/jgrapht).
         
     2. Methods:
         1. [**Constructor**]Read in a file and translate it into a direct graph.
