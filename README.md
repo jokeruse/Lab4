@@ -66,9 +66,9 @@ Implement a translator which generates a direct graph with a text file.
             
             **Interface:**
             
-            |       Name      | Parameter Type | Return Value Type |
-            |:---------------:|:--------------:|:-----------------:|
-            | generateNewText | String, String |      String[]     |
+            |       Name       | Parameter Type | Return Value Type |
+            |:----------------:|:--------------:|:-----------------:|
+            | calcShortestPath | String, String |      String[]     |
             
         6. Get all shortest paths from one word to other words. (Requirements are the same to the above.)
          
@@ -91,9 +91,9 @@ Implement a translator which generates a direct graph with a text file.
             
             **Interface:**
             
-            |       Name       | Parameter Type | Return Value Type |
-            |:----------------:|:--------------:|:-----------------:|
-            | calcShortestPath |     String     |      String[]     |
+            |    Name    | Parameter Type | Return Value Type |
+            |:----------:|:--------------:|:-----------------:|
+            | randomWalk |        -       |       String      |
             
 ## Collaborators
 [@ANDI_Mckee](https://github.com/ANDI-Mckee)
