@@ -1,8 +1,6 @@
 package org.hitbioinfo.exp1;
 
-
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
 public class DirectedGraph {
@@ -12,35 +10,35 @@ public class DirectedGraph {
 
     // Utility function to convert Integer to boolean
     private boolean toBoolean(Integer x) {
-        if (x != 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (x != 0);
     }
 
     // Constructor
     public DirectedGraph(int size) {
         mSize = size;
-        mGraph = new ArrayList<Integer>(size * size);
-        mColor = new ArrayList<Boolean>(size);
+
+        // Initialize mGraph
+        Integer[] temp1 = new Integer[size * size];
+        Arrays.fill(temp1, 0);
+        mGraph = Arrays.asList(temp1);
+
+        // Initialize mColor
+        Boolean[] temp2 = new Boolean[size];
+        Arrays.fill(temp2, false);
+        mColor = Arrays.asList(temp2);
     }
 
     // Test whether there is an arc from v1 to v2.
     public boolean isArc(int v1, int v2) {
-        if (toBoolean(mGraph.get(v1 * mSize + v2))) {
-            return true;
-        } else {
-            return false;
-        }
+        return toBoolean(mGraph.get(v1 * mSize + v2));
     }
 
     // Add an arc from v1 to v2. Return false if there is already an arc.
     public boolean addArc(int v1, int v2, Integer weight) {
-        if (! isArc(v1, v2)) {
+        if (isArc(v1, v2)) {
             return false;
         }
-        mGraph.add(v1 * mSize + v2, weight);
+        mGraph.set(v1 * mSize + v2, weight);
         return true;
     }
 
@@ -64,5 +62,4 @@ public class DirectedGraph {
             mColor.set(i, false);
         }
     }
-
 }

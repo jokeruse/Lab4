@@ -16,7 +16,7 @@ public class Main {
     // The purpose of this construction of the Main class is for the separation of the other codes from TRY BLOCK.
     private static void run(String[] args) {
         // Process different parameters.
-        if (args.length == 0 || args[0].equals("-h") ) {
+        if (args.length == 0 || args[0].equals("-h")) {
             // Print the help text.
             System.out.println("Usage: wordsToGraph [-h] <filename>");
             return;
@@ -48,9 +48,13 @@ public class Main {
             // Generate a new graph.
             WordsGraph wordsGraph = new WordsGraph(rawInput);
 
+
+            /* ----------------- Interaction Begins ----------------- */
+
             // Show the generated graph.
             System.out.println("The Generated graph is showed and saved.");
             wordsGraph.showDirectedGraph();
+            System.out.println();
 
             in = new Scanner(System.in);
 
@@ -67,26 +71,28 @@ public class Main {
                 System.out.println("The bridge words from word1 to word2 is: "
                         + bridgeWords[0] + ".");
             } else {
-                System.out.println("The bridge words from word1 to word2 are: ");
+                System.out.print("The bridge words from word1 to word2 are: ");
 
                 // Print words except the last one in the FOR LOOP.
-                for (int i = 0; i < bridgeWords.length - 1; ++i) {
-                    System.out.println(bridgeWords[i] + ", ");
+                for (int i = 0; i < bridgeWords.length - 2; ++i) {
+                    System.out.print(bridgeWords[i] + ", ");
                 }
-                System.out.println("and "
+                System.out.println(bridgeWords[bridgeWords.length - 2] + " and "
                         + bridgeWords[bridgeWords.length - 1] + ".");
             }
+            System.out.println();
 
             // Generate new text in terms of the newly input text and the graph.
             System.out.println("Please input a text in a single line:");
             String inputText = in.nextLine();
             System.out.println("The text is:");
             System.out.println(wordsGraph.generateNewText(inputText));
+            System.out.println();
 
             // Get the shortest path(s) from word1 to word2 in the graph.
             System.out.println("Please input two words to find shortest path(s) from word1 to word2.");
             System.out.print("Word1: ");
-            word1 = inputText;
+            word1 = in.next();
             System.out.print("Word2: ");
             word2 = in.next();
             System.out.println("The shortest path(s) are:");
@@ -98,6 +104,7 @@ public class Main {
                     System.out.println(path);
                 }
             }
+            System.out.println();
 
             // Get all shortest paths from one word to other words.
             System.out.println("Please input a word to find all shortest path(s) to other words if existed:");
@@ -110,13 +117,13 @@ public class Main {
                     System.out.println(path);
                 }
             }
+            System.out.println();
 
             // Traverse the graph from a random words as a start point.
             System.out.println("Please input a word as a start point:");
             word = in.next();
             System.out.println("The traversal routine is:");
             System.out.println(wordsGraph.randomWalk());
-
         } else {
             System.out.println("Attention: Bad parameter. See 'wordsToGraph -h'.");
         }
