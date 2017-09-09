@@ -5,7 +5,7 @@ import java.util.*;
 public class WordsGraph {
     private DirectedGraph<String> mWordsGraph;
     private int mSize;  // Store the number of vertices.
-    private Set<String> wordsSet = new HashSet<String>(); // Store all the words present.
+    private Set<String> wordsSet = new HashSet<>(); // Store all the words present.
     private String presentWordInWalk;   // The present word in the random walk.
     private boolean flagOfWalk = false; // Flag to indicate whether an arc is just visited twice in the walk.
 
@@ -51,7 +51,7 @@ public class WordsGraph {
             wordsSet.add(strScanner.next());
         }
         mSize = wordsSet.size();
-        mWordsGraph = new DirectedGraph<String>(wordsSet);
+        mWordsGraph = new DirectedGraph<>(wordsSet);
 
         if (mSize == 0 || mSize == 1) { // If there is no word...
             return;

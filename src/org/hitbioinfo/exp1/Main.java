@@ -1,8 +1,6 @@
 package org.hitbioinfo.exp1;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,7 +23,7 @@ public class Main {
             // Print the help text.
             System.out.println("Usage: wordsToGraph [-h] <filename>");
         } else if (args.length == 1) {
-            /* ----------------- Construcion of Words Graph ----------------- */
+            /* ----------------- Construction of Words Graph ----------------- */
 
             // Read in the file.
             File inputFile = new File(args[0]);
@@ -134,7 +132,7 @@ public class Main {
                 presentWord = aWordsGraph.randomWalk();
 
                 // Test whether the walk is over.
-                if (presentWord == "") {
+                if (presentWord.equals("")) {
                     System.out.println("The walk is over.");
                     break;
                 }
