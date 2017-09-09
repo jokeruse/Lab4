@@ -168,37 +168,32 @@ public class DirectedGraph<T> {
     }
 
     // Color a vertex. Return false if it is already colored.
-    public boolean color(T vertex) {
+    public void color(T vertex) {
         // Throw exception when receiving bad parameters.
         if (! containsVertex(vertex)) {
             throw new RuntimeException("Error in color(T): The vertex " +
                     "is not found in the DirectedGraph object!");
-        }
-        if (isColored(vertex)) {
-            return false;
+        } else if (isColored(vertex)) {
+            throw new RuntimeException("Error in color(T, T): The vertex is already colored!");
         }
 
         int index = dataToIndex.get(vertex);
         mVertexColor.set(index, true);
-        return true;
     }
 
     // Color an edge. Return false if it is already colored.
-    public boolean color(T v1, T v2) {
-        // Throw exception when receiving bad parameters.
+    public void color(T v1, T v2) {
+        // Throw exception when receiving bad parameters OR the edge is already colored.
         if (! containsVertex(v1) || ! containsVertex(v2)) {
             throw new RuntimeException("Error in color(T, T): The v1 (or v2) is not " +
                     "found in the DirectedGraph object!");
-        }
-
-        if (isColored(v1, v2)) {
-            return false;
+        } else if (isColored(v1, v2)) {
+            throw new RuntimeException("Error in color(T, T): The arc from v1 to v2 is already colored!");
         }
 
         int index1 = dataToIndex.get(v1);
         int index2 = dataToIndex.get(v2);
         mEdgeColor.set(index1 * mSize + index2, true);
-        return true;
     }
 
     // Wipe all colors on vertices and edges.
