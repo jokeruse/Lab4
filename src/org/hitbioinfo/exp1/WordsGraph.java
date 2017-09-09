@@ -49,7 +49,7 @@ public class WordsGraph {
             wordsSet.add(strScanner.next());
         }
         mSize = wordsSet.size();
-        mWordsGraph = new DirectedGraph<String>(mSize);
+        mWordsGraph = new DirectedGraph<String>(wordsSet);
 
         if (mSize == 0 || mSize == 1) { // If there is no word...
             return;
@@ -57,18 +57,14 @@ public class WordsGraph {
 
         strScanner = new Scanner(builder.toString());
         String srcWord = strScanner.next();
-        String tgtWord = strScanner.next();
-        mWordsGraph.addArc(srcWord, tgtWord, 1);
-        srcWord = tgtWord;
 
         // The main part of the construction.
         while (strScanner.hasNext()) {
             // Read the next word.
-            tgtWord = strScanner.next();
+            String tgtWord = strScanner.next();
 
             // Add an arc.
-            if (mWordsGraph.containsVertex(srcWord) && mWordsGraph.containsVertex(tgtWord)
-                    && mWordsGraph.isArc(srcWord, tgtWord)) {  // If the arc already exists...
+            if (mWordsGraph.isArc(srcWord, tgtWord)) {  // If the arc already exists...
                 int tempWeight = mWordsGraph.getWeight(srcWord, tgtWord);
                 mWordsGraph.setWeight(srcWord, tgtWord, tempWeight + 1);
             } else {

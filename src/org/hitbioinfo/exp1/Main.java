@@ -1,6 +1,11 @@
 package org.hitbioinfo.exp1;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -23,8 +28,8 @@ public class Main {
             /* ----------------- Construcion of Words Graph ----------------- */
 
             // Read in the file.
-            File file = new File(args[0]);
-            if (file.isDirectory()) {       // Check whether the file is a directory.
+            File inputFile = new File(args[0]);
+            if (inputFile.isDirectory()) {       // Check whether the file is a directory.
                 System.out.println("Attention: '" + args[0]
                         + "' is a directory. See help text with argument '-h'.");
                 return;
@@ -33,7 +38,7 @@ public class Main {
             // Read in the text.
             Scanner in;
             try {
-                in = new Scanner(file, "UTF-8");
+                in = new Scanner(inputFile, "UTF-8");
             }
             catch (FileNotFoundException e) {
                 throw new RuntimeException("Attention: The file is not found!");
@@ -122,9 +127,16 @@ public class Main {
             // And write the result to disk.
 
             System.out.println("The random traversal path is:");
-            System.out.println(aWordsGraph.randomWalk());
+            String walkTrace = aWordsGraph.randomWalk();
+            System.out.println(walkTrace);
 
-            // TODO: Write down the result into a file.
+            // Write down the result into a file.
+            Path outputFile = Paths.get("random-walk-trace.txt");
+            try {
+                Files.write(outputFile, walkTrace.getBytes("UTF-8"));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
 
         } else {
             System.out.println("Attention: Bad parameter. See 'wordsToGraph -h'.");
