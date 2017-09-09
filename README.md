@@ -17,24 +17,33 @@ Implement a translator which generates a direct graph with a text file.
 
     The methods of this class are:
     ```java
-    class DirectedGraph {
-        // Test whether there is an arc from v1 to v2.
-        boolean isArc(int, int);
+    class DirectedGraph<T> {
+        // Get the weight of arc v1 -> v2.
+        int getWeight(T, T)
         
-        // Add an arc from v1 to v2. Return false if there is already an arc.
-        boolean addArc(int, int, Integer);
+        // Set the weight of arc v1 -> v2.
+        int setWeight(T, T, int)
+    
+        // Test whether there is an arc from v1 to v2.
+        boolean isArc(T, T);
+        
+        // Add an arc from v1 to v2.
+        void addArc(T, T, Integer);
+        
+        // Return an list contain all the adjacent vertices to src.
+        List<T> adjacentVertices(T src) {
         
         // Test whether the vertex is colored.
-        boolean isColored(int);
+        boolean isColored(T);
         
         // Test whether the edge is colored.
-        boolean isColored(int, int);
+        boolean isColored(T, T);
         
-        // Color a vertex. Return false if it is already colored.
-        boolean colorVertex(int); 
+        // Color a vertex.
+        void colorVertex(T); 
         
-        // Color an edge. Return false if it is already colored.
-        boolean colorVertex(int, int); 
+        // Color an edge.
+        void colorEdge(T, T); 
         
         // Wipe all colors on vertices and edges.
         void cleanColors(); 
@@ -45,7 +54,7 @@ Implement a translator which generates a direct graph with a text file.
     1. Data member:
         ```java
         DirectedGraph<String, Integer> mWordsGraph; // Store the words graph with index.
-        Hashtable<Integer, String> indexToWords; // A map from index to words
+        wordsSet = new HashSet<String>(); // Store all the words.
         int mSize; // Store the size of words graph.
         ```
         
