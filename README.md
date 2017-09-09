@@ -7,12 +7,35 @@ Implement a translator which generates a direct graph with a text file.
 
 1. Main class (main.java)
     1. It only contains the **logic** of the entire program process.
-    2. The parameter(s) of the program:
-        * **FILE NAME** Run the program normally.
+    2. The valid parameter(s) of the program:
+        * **FILENAME** Run the program normally.
         * **-h** Print the help text.
         * **NONE** Print the help text.
+    3. The main function call the `void run(String[] args)` to perform the main process.
+       The purpose of this design is to extraced some code out of the `try` block.
+2. A simple DirectedGraph class (DirectedGraph.java)
 
-2. Words graph class (WordsGraph.java)
+    The methods of this class are:
+    ```java
+    class DirectedGraph {
+        // Test whether there is an arc from v1 to v2.
+        boolean isArc(int, int);
+        
+        // Add an arc from v1 to v2. Return false if there is already an arc.
+        boolean addArc(int, int, Integer);
+        
+        // Test whether the vertex is colored.
+        boolean isColored(int);
+        
+        // Color a vertex. Return false if it is already colored.
+        boolean colorVertex(int); 
+        
+        // Wipe all colors on vertices.
+        void cleanColors(); 
+    }
+    ```
+
+3. Words graph class (WordsGraph.java)
     1. Data member:
     
         <code> DirectedGraph<String, Integer> aGraph;  </code>
@@ -35,17 +58,17 @@ Implement a translator which generates a direct graph with a text file.
             |:-----------------:|:--------------:|:-----------------:|
             | showDirectedGraph |        -       |        void       |
          
-        3. Get all **bridge words** between *two words which are input*.
+        3. Get all **bridge words** from word1 to word2.
          
             **Interface:**
             
             |       Name       | Parameter Type | Return Value Type |
             |:----------------:|:--------------:|:-----------------:|
-            | queryBridgeWords | String, String |       String      |
-         
+            | queryBridgeWords | String, String |      String[]     |
+
         4. Generate new text in terms of the newly input text and the graph.
          
-            **Requirements**:
+            **Requirements:**
             
             1. If two words in the newly input text have *ONE* bridge word in the graph. Insert it into the text.
             2. If two words in the newly input text have *MORE THAN ONE* bridge word in the graph. Insert one randomly.
@@ -57,9 +80,9 @@ Implement a translator which generates a direct graph with a text file.
             |:---------------:|:--------------:|:-----------------:|
             | generateNewText |     String     |       String      |
             
-        5. Get the shortest path(s) between two words in the graph.
+        5. Get the shortest path(s) from word1 to word2 in the graph.
          
-            **Requirements**:
+            **Requirements:**
             
             1. If there are several shortest paths between them, return them all.
             2. If there is no shortest path between them, return an empty array.
@@ -81,7 +104,7 @@ Implement a translator which generates a direct graph with a text file.
             
         7. Traverse the graph from a random words as a start point.
          
-            **Requirements**:
+            **Requirements:**
             
             1. The traversal path is random.
             2. Only outarcs can be visited during the traversal.
