@@ -27,19 +27,27 @@ Implement a translator which generates a direct graph with a text file.
         // Test whether the vertex is colored.
         boolean isColored(int);
         
+        // Test whether the edge is colored.
+        boolean isColored(int, int);
+        
         // Color a vertex. Return false if it is already colored.
         boolean colorVertex(int); 
         
-        // Wipe all colors on vertices.
+        // Color an edge. Return false if it is already colored.
+        boolean colorVertex(int, int); 
+        
+        // Wipe all colors on vertices and edges.
         void cleanColors(); 
     }
     ```
 
 3. Words graph class (WordsGraph.java)
     1. Data member:
-    
-        <code> DirectedGraph<String, Integer> aGraph;  </code>
-        The graph class is from [this project](https://github.com/jgrapht/jgrapht).
+        ```java
+        DirectedGraph<String, Integer> mWordsGraph; // Store the words graph with index.
+        Hashtable<Integer, String> indexToWords; // A map from index to words
+        int mSize; // Store the size of words graph.
+        ```
         
     2. Methods:
         1. [**Constructor**]Read in a file and translate it into a direct graph.
