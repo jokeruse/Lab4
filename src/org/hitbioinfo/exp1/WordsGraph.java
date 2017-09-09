@@ -5,7 +5,9 @@ import java.util.*;
 public class WordsGraph {
     private DirectedGraph<String> mWordsGraph;
     private int mSize;  // Store the number of vertices.
-    Set<String> wordsSet = new HashSet<String>(); // Store all the words present.
+    private Set<String> wordsSet = new HashSet<String>(); // Store all the words present.
+    private String presentWordInWalk;   // The present word in the random walk.
+    private boolean flagOfWalk = false; // Flag to indicate whether an arc is just visited twice in the walk.
 
     // Utility function to get a random word in words set
     private String randWord() {
@@ -95,41 +97,44 @@ public class WordsGraph {
         // TODO: Implementation
     }
 
+    public void resetWalk() {
+        presentWordInWalk = null;
+        flagOfWalk = false;
+    }
+
     public String randomWalk() {
-        // Select a random start point.
-        String startWord = randWord();
-
-        // Initialize the string builder.
-        StringBuilder builder = new StringBuilder();
-
-        String tempWord = startWord;
-        while (true) {
-            builder.append(tempWord).append(" ");
-
-            // Get all the adjacent words to the present word.
-            List<String> adjVertices = mWordsGraph.adjacentVertices(tempWord);
-
-            // Stop when there is no target from the source.
-            if (adjVertices.size() == 0) {
-                break;
-            }
-
-            // Select a random target and add it.
-            int adjSize = adjVertices.size();
-            Random rand = new Random();
-            String randTgtWord = adjVertices.get(rand.nextInt(adjSize));
-
-            // Test whether the edge is already visited.
-            if (mWordsGraph.isColored(tempWord, randTgtWord)) {
-                builder.append(randTgtWord).append(" ");
-                break;
-            }
-
-            // Color the visited edge and update the temporary vertex.
-            mWordsGraph.color(tempWord, randTgtWord);
-            tempWord = randTgtWord;
+        // Entry and Exit.
+        if (presentWordInWalk == null) {    // Test whether it is the first word of walk.
+            presentWordInWalk = randWord();
+        } else if (presentWordInWalk.equals("")) { // Test whether it is the last word of walk.
+            return "";
         }
 
-        return builder.toString();
+        // Get all the adjacent words to the present word.
+        List<String> adjVertices = mWordsGraph.adjacentVertices(presentWordInWalk);
+
+        // Test whether there is no out-arcs from presentWordInWalk OR an arc is just visited twice.
+        if (adjVertices.size() == 0 || flagOfWalk) {
+            String tempStr = presentWordInWalk;
+            presentWordInWalk = "";
+            return tempStr;
+        }
+
+        // Select a random target and add it.
+        int adjSize = adjVertices.size();
+        Random rand = new Random();
+        String tgtWord = adjVertices.get(rand.nextInt(adjSize));
+
+        // Test whether the edge is already visited.
+        if (mWordsGraph.isColored(presentWordInWalk, tgtWord)) {
+            flagOfWalk = true;
+        } else {
+            mWordsGraph.color(presentWordInWalk, tgtWord);
+        }
+
+        // Update presentWordInWalk.
+        String tempStr = presentWordInWalk;
+        presentWordInWalk = tgtWord;
+        return tempStr;
     }
 }

@@ -125,10 +125,31 @@ public class Main {
 
             // Traverse the graph from a random word as a start point.
             // And write the result to disk.
-
             System.out.println("The random traversal path is:");
-            String walkTrace = aWordsGraph.randomWalk();
-            System.out.println(walkTrace);
+            aWordsGraph.resetWalk();
+            builder = new StringBuilder();
+            String presentWord;
+
+            while (true) {
+                presentWord = aWordsGraph.randomWalk();
+
+                // Test whether the walk is over.
+                if (presentWord == "") {
+                    System.out.println("The walk is over.");
+                    break;
+                }
+
+                builder.append(presentWord).append(" ");
+                System.out.print("The present word in walk is: "
+                        + presentWord + ". Input 'y' to continue.  ");
+                String ans = in.next();
+
+                if (! ans.equals("y") && ! ans.equals("Y")) {
+                    break;                  // Stop by user's input.
+                }
+            }
+
+            String walkTrace = builder.toString();
 
             // Write down the result into a file.
             Path outputFile = Paths.get("random-walk-trace.txt");
