@@ -53,9 +53,11 @@ Implement a translator which generates a direct graph with a text file.
 3. Words graph class (WordsGraph.java)
     1. Data member:
         ```java
-        DirectedGraph<String, Integer> mWordsGraph; // Store the words graph with index.
-        wordsSet = new HashSet<String>(); // Store all the words.
+        DirectedGraph<String> mWordsGraph; // Store the words graph with index.
+        Set<String> wordsSet = new HashSet<>(); // Store all the words.
         int mSize; // Store the size of words graph.
+        String presentWordInWalk; // The present word in the random walk.
+        boolean flagOfWalk = false; // Flag to indicate whether an arc is just visited twice in the walk.
         ```
         
     2. Methods:
