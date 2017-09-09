@@ -19,7 +19,6 @@ public class Main {
         if (args.length == 0 || args[0].equals("-h")) {
             // Print the help text.
             System.out.println("Usage: wordsToGraph [-h] <filename>");
-            return;
         } else if (args.length == 1) {
             // Execute the primary function.
 
@@ -46,14 +45,14 @@ public class Main {
             String rawInput = builder.toString();
 
             // Generate a new graph.
-            WordsGraph wordsGraph = new WordsGraph(rawInput);
+            WordsGraph aWordsGraph = new WordsGraph(rawInput);
 
 
             /* ----------------- Interaction Begins ----------------- */
 
             // Show the generated graph.
             System.out.println("The Generated graph is showed and saved.");
-            wordsGraph.showDirectedGraph();
+            aWordsGraph.showDirectedGraph();
             System.out.println();
 
             in = new Scanner(System.in);
@@ -64,7 +63,7 @@ public class Main {
             String word1 = in.next();
             System.out.print("Word 2: ");
             String word2 = in.next();
-            String[] bridgeWords = wordsGraph.queryBridgeWords(word1, word2);
+            String[] bridgeWords = aWordsGraph.queryBridgeWords(word1, word2);
             if (bridgeWords.length == 0) {
                 System.out.println("No bridge words from word1 to word2!");
             } else if (bridgeWords.length == 1) {
@@ -86,7 +85,7 @@ public class Main {
             System.out.println("Please input a text in a single line:");
             String inputText = in.nextLine();
             System.out.println("The text is:");
-            System.out.println(wordsGraph.generateNewText(inputText));
+            System.out.println(aWordsGraph.generateNewText(inputText));
             System.out.println();
 
             // Get the shortest path(s) from word1 to word2 in the graph.
@@ -96,7 +95,7 @@ public class Main {
             System.out.print("Word2: ");
             word2 = in.next();
             System.out.println("The shortest path(s) are:");
-            String[] paths = wordsGraph.calcShortestPath(word1, word2);
+            String[] paths = aWordsGraph.calcShortestPath(word1, word2);
             if (paths.length == 0) {
                 System.out.println("There is no path from word1 to word2.");
             } else {
@@ -109,7 +108,7 @@ public class Main {
             // Get all shortest paths from one word to other words.
             System.out.println("Please input a word to find all shortest path(s) to other words if existed:");
             String word = in.next();
-            paths = wordsGraph.calcShortestPath(word);
+            paths = aWordsGraph.calcShortestPath(word);
             if (paths.length == 0) {
                 System.out.println("There is no path from this word to other words.");
             } else {
@@ -119,11 +118,14 @@ public class Main {
             }
             System.out.println();
 
-            // Traverse the graph from a random words as a start point.
-            System.out.println("Please input a word as a start point:");
-            word = in.next();
-            System.out.println("The traversal routine is:");
-            System.out.println(wordsGraph.randomWalk());
+            // Traverse the graph from a random word as a start point.
+            // And write the result to disk.
+
+            System.out.println("The random traversal path is:");
+            System.out.println(aWordsGraph.randomWalk());
+
+            // TODO: Write down the result into a file.
+
         } else {
             System.out.println("Attention: Bad parameter. See 'wordsToGraph -h'.");
         }
