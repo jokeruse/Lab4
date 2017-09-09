@@ -20,7 +20,7 @@ public class Main {
             // Print the help text.
             System.out.println("Usage: wordsToGraph [-h] <filename>");
         } else if (args.length == 1) {
-            // Execute the primary function.
+            /* ----------------- Construcion of Words Graph ----------------- */
 
             // Read in the file.
             File file = new File(args[0]);
