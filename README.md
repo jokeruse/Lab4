@@ -6,7 +6,7 @@ Implement a translator which generates a direct graph with a text file.
 ## Architecture
 
 1. Main class (main.java)
-    1. It only contains the **logic** of the entire program process.
+    1. It only contains the **logic**(NOT present in the README) of the entire program process.
     2. The valid parameter(s) of the program:
         * **FILENAME** Run the program normally.
         * **-h** Print the help text.
@@ -111,7 +111,7 @@ Implement a translator which generates a direct graph with a text file.
             3. The traversal stops whenever:
                 1. An arc is visited twice.
                 2. There is no next reachable word.
-            4. The traversal path should be showed in the form like "to -> explore -> band".
+            4. The traversal path should be showed in the form like "to explore band".
             
             **Interface:**
             
