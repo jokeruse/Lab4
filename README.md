@@ -1,5 +1,5 @@
 # SE-Experiment-1
-Implement a translator which generates a direct graph with a text file.
+Implement a program which generates a directed graph with a text file.
 
 *This README plays the role of a project documentation.*
 
@@ -8,11 +8,13 @@ Implement a translator which generates a direct graph with a text file.
 1. Main class (main.java)
     1. It only contains the **logic**(NOT present in the README) of the entire program process.
     2. The valid parameter(s) of the program:
-        * **FILENAME** Run the program normally.
-        * **-h** Print the help text.
-        * **NONE** Print the help text.
+    ```
+        -h         Print the help text.
+        NONE       Print the help text.
+        FILENAME   Run the program normally.
+    ```
     3. The main function call the `void run(String[] args)` to perform the main process.
-       The purpose of this design is to extraced some code out of the `try` block.
+       The purpose of this design is to extract some code out of the `try` block.
 2. A simple DirectedGraph class (DirectedGraph.java)
 
     The methods of this class are:
@@ -27,11 +29,11 @@ Implement a translator which generates a direct graph with a text file.
         // Test whether there is an arc from v1 to v2.
         boolean isArc(T, T);
         
-        // Add an arc from v1 to v2.
+        // Add an arc from v1 to v2 with weight.
         void addArc(T, T, Integer);
         
         // Return an list contain all the adjacent vertices to src.
-        List<T> adjacentVertices(T src) {
+        List<T> adjacentVertices(T);
         
         // Test whether the vertex is colored.
         boolean isColored(T);
@@ -53,11 +55,11 @@ Implement a translator which generates a direct graph with a text file.
 3. Words graph class (WordsGraph.java)
     1. Data member:
         ```java
-        DirectedGraph<String> mWordsGraph; // Store the words graph with index.
+        DirectedGraph<String> mWordsGraph;      // Store the words graph with index.
         Set<String> wordsSet = new HashSet<>(); // Store all the words.
-        int mSize; // Store the size of words graph.
-        String presentWordInWalk; // The present word in the random walk.
-        boolean flagOfWalk = false; // Flag to indicate whether an arc is just visited twice in the walk.
+        int mSize;                              // Store the size of words graph.
+        String presentWordInWalk;               // The present word in the random walk.
+        boolean flagOfWalk = false;             // Flag to indicate whether an arc is just visited twice in the walk.
         ```
         
     2. Methods:
@@ -130,7 +132,8 @@ Implement a translator which generates a direct graph with a text file.
             3. The traversal stops whenever:
                 1. An arc is visited twice.
                 2. There is no next reachable word.
-            4. The traversal path should be showed in the form like "to explore band".
+            4. The traversal path written ino file should be showed in the form like "to explore band".
+            5. **This function return a visited word every time it is called. Use resetWalk() to reset the process.**
             
             **Interface:**
             
