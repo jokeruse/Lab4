@@ -1,2 +1,0 @@
-digraph G {
-apple->tree[label=1 color=red];tree->word[label=1 color=red];to->apple[label=1 color=red];to->word[label=1 color=red];word->apple[label=1 color=red];word->to[label=1 color=red];}
