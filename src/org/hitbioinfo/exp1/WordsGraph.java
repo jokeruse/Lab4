@@ -52,7 +52,7 @@ public class WordsGraph {
 
     // Create dot graph.
     private void createDotGraph(String dotFormat,String fileName) {
-        GraphViz gv=new GraphViz();
+        GraphViz gv = new GraphViz();
         gv.addln(gv.start_graph());
         gv.add(dotFormat);
         gv.addln(gv.end_graph());
@@ -170,23 +170,66 @@ public class WordsGraph {
         }
 
         createDotGraph(builder.toString(), "wordsGraph");
-        displayPic("wordsGraph.gif");
+        //displayPic("wordsGraph.gif");
     }
 
     public String[] queryBridgeWords(String word1, String word2) {
-        // TODO: Implementation
+        List<String> tempBridgeWords = new ArrayList<String>();
+        if(!wordsSet.contains(word1))
+            return new String[]{};
+        List<String> adjVertices = mWordsGraph.adjacentVertices(word1);
+        for(String tempWords : adjVertices){
+            List<String> tempadjVertices = mWordsGraph.adjacentVertices(tempWords);
+            for(String nexttempWords : tempadjVertices){
+                if(nexttempWords.equals(word2)){
+                    tempBridgeWords.add(tempWords);
+                    break;
+                }
+            }
+        }
+        String[] BridgeWords = new String[tempBridgeWords.size()];
+        for(int i = 0; i < tempBridgeWords.size(); i ++){
+            BridgeWords[i] = tempBridgeWords.get(i);
+        }
+        return  BridgeWords;
     }
 
-    public String generateNewText(String aString) {
-        // TODO: Implementation
+    public String generateNewText(String aString){
+        List<String> WordList = new ArrayList<String>();
+        for(int i = 0; i < aString.length(); i ++){
+            if( (aString.charAt(i) >= 'a' && aString.charAt(i) <= 'z')
+              ||(aString.charAt(i) >= 'A' && aString.charAt(i) <= 'Z')){
+                String temp = new String("");
+                int j;
+                for(j = i; j < aString.length() && !Character.isWhitespace(aString.charAt(j)); j ++){
+                    temp += aString.charAt(j);
+                }
+                WordList.add(temp);
+                i = j;
+            }
+        }
+        if(WordList.size() < 1) return aString;
+        String NewText = new String("");
+        NewText += WordList.get(0);
+        for(int i = 1; i < WordList.size(); i ++){
+            String[] BridgeWords = queryBridgeWords(WordList.get(i - 1).toLowerCase(), WordList.get(i).toLowerCase());
+            if(BridgeWords.length > 0) {
+                int p = new Random().nextInt(BridgeWords.length);
+                NewText += " " + BridgeWords[p];
+            }
+            NewText += " " + WordList.get(i);
+        }
+        return  NewText;
     }
 
     public String[] calcShortestPath(String word) {
         // TODO: Implementation
+        return  null;
     }
 
     public String[] calcShortestPath(String word1, String word2) {
         // TODO: Implementation
+        return  null;
     }
 
     public String randomWalk() {
