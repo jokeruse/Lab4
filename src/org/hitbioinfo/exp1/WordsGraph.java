@@ -1,5 +1,11 @@
 package org.hitbioinfo.exp1;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 
 public class WordsGraph {
@@ -29,6 +35,67 @@ public class WordsGraph {
             throw new RuntimeException("Error: Failed to generate random word in randWord()!");
         }
         return aRandWord;
+    }
+
+    // Add an arc into graph-viz format file.
+    private String createArcFormat(String src, String tgt, int weight, boolean isEmphasized) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(src).append("->").append(tgt).append("[label=").append(weight);
+        if (isEmphasized) {
+            builder.append(" color=red];");
+        } else {
+            builder.append("];");
+        }
+
+        return builder.toString();
+    }
+
+    // Create dot graph.
+    private void createDotGraph(String dotFormat,String fileName) {
+        GraphViz gv=new GraphViz();
+        gv.addln(gv.start_graph());
+        gv.add(dotFormat);
+        gv.addln(gv.end_graph());
+        String type = "gif";
+        gv.increaseDpi();
+        gv.increaseDpi();
+        gv.increaseDpi();
+        File out = new File(fileName+"."+ type);
+        gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out);
+    }
+
+    // Display picture file.
+    private void displayPic(String fileName) {
+        try {
+            // This is a new frame, where the picture should be shown.
+            final JFrame showPictureFrame = new JFrame(fileName);
+            JLabel pictureLabel = new JLabel();
+
+            /* Read the image */
+
+            URL url = new File(fileName).toURI().toURL();
+            BufferedImage img = ImageIO.read(url);
+
+             /* until here */
+
+            // Add the image as ImageIcon to the label.
+            pictureLabel.setIcon(new ImageIcon(img));
+            // Add the label to the frame.
+            showPictureFrame.add(pictureLabel);
+            // Pack everything (does many stuff. e.g. resize the frame to fit the image)
+            showPictureFrame.pack();
+
+            // This is how you should open a new Frame or Dialog
+            // but only using showPictureFrame.setVisible(true); would also work.
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    showPictureFrame.setVisible(true);
+                }
+            });
+        } catch (IOException ex) {
+            System.err.println("Some IOException occurred (did you set the right path?): ");
+            System.err.println(ex.getMessage());
+        }
     }
 
     /* ----------------- Constructors ----------------- */
@@ -86,7 +153,24 @@ public class WordsGraph {
     /* ----------------- Primary Methods ----------------- */
 
     public void showDirectedGraph() {
-        // TODO: Implementation
+        StringBuilder builder = new StringBuilder();
+
+        // Create dot format string.
+        for (String src : wordsSet) {
+            List<String> adjVertices = mWordsGraph.adjacentVertices(src);
+            if (adjVertices.size() == 0) {
+                continue;
+            }
+            for (String tgt : adjVertices) {
+                String temp;
+                int weight = mWordsGraph.getWeight(src, tgt);
+                temp = createArcFormat(src, tgt, weight, false);
+                builder.append(temp);
+            }
+        }
+
+        createDotGraph(builder.toString(), "wordsGraph");
+        displayPic("wordsGraph.gif");
     }
 
     public String[] queryBridgeWords(String word1, String word2) {
