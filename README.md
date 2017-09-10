@@ -3,8 +3,10 @@ Implement a program which generates a directed graph with a text file.
 
 *This README plays the role of a project documentation.*
 
-## Architecture
+## Declaration
+*This project contains binary file from [Graphviz](http://www.graphviz.org/) and codes from [this top answer](https://stackoverflow.com/questions/26481910/how-to-call-graphviz-from-java).*
 
+## Architecture
 1. Main class (main.java)
     1. It only contains the **logic**(NOT present in the README) of the entire program process.
     2. The valid parameter(s) of the program:
@@ -61,8 +63,29 @@ Implement a program which generates a directed graph with a text file.
         String presentWordInWalk;               // The present word in the random walk.
         boolean flagOfWalk = false;             // Flag to indicate whether an arc is just visited twice in the walk.
         ```
+    2. Private Methods:
+        ```java
+        // Get a random word in words set
+        String randWord();
         
-    2. Methods:
+        /***
+        * To display a words graph,
+        * first, you should create a StringBuilder object and use createArcFormat() to form a dotFormat string.
+        * then call createDotGraph() with dotFormat string you've just created,
+        * and finally call the displayPic().
+        */
+        
+        // Add an arc into graph-viz format file.
+        String createArcFormat(String src, String tgt, int weight, boolean isEmphasized);
+        
+        // Create dot graph.
+        void createDotGraph(String dotFormat,String fileName);
+        
+        // Display picture file.
+        void displayPic(String fileName);
+        ```
+    
+    3. Public Methods:
         1. [**Constructor**]Read in a file and translate it into a direct graph.
         
             **Interface:**
@@ -140,6 +163,22 @@ Implement a program which generates a directed graph with a text file.
             |    Name    | Parameter Type | Return Value Type |
             |:----------:|:--------------:|:-----------------:|
             | randomWalk |        -       |       String      |
+           
+        8. [**EXTRA**]Reset the random walk.
+        
+            **Interface:**
+            
+            |    Name   | Parameter Type | Return Value Type |
+            |:---------:|:--------------:|:-----------------:|
+            | resetWalk |        -       |        void       |
+            
+        9. [**EXTRA**]Test whether a word is in the words graph.
+        
+            **Interface:**
+            
+            |      Name     | Parameter Type | Return Value Type |
+            |:-------------:|:--------------:|:-----------------:|
+            | containsWords |     String     |      boolean      |
             
 ## Collaborators
 [@ANDI_Mckee](https://github.com/ANDI-Mckee)
