@@ -25,13 +25,15 @@ public class DirectedGraph<T> {
 
     private int mSize;
 
-    // Utility function to convert Integer to boolean
+    /* ----------------- Utility Function ----------------- */
+
+    // Convert Integer to boolean
     private boolean toBoolean(Integer x) {
         return (x != 0);
     }
 
-    // Utility function to test whether a vertex is in the graph.
-    public boolean containsVertex(T vertex) {
+    // Test whether a vertex is in the graph.
+    private boolean containsVertex(T vertex) {
         return dataToIndex.containsKey(vertex);
     }
 

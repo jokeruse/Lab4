@@ -3,13 +3,17 @@ package org.hitbioinfo.exp1;
 import java.util.*;
 
 public class WordsGraph {
+    /* ----------------- Instance Filed ----------------- */
+
     private DirectedGraph<String> mWordsGraph;
     private int mSize;  // Store the number of vertices.
     private Set<String> wordsSet = new HashSet<>(); // Store all the words present.
     private String presentWordInWalk;   // The present word in the random walk.
     private boolean flagOfWalk = false; // Flag to indicate whether an arc is just visited twice in the walk.
 
-    // Utility function to get a random word in words set
+    /* ----------------- Utility Function ----------------- */
+
+    // Get a random word in words set
     private String randWord() {
         int randomIndex = new Random().nextInt(mSize);
         int i = 0;
@@ -26,6 +30,8 @@ public class WordsGraph {
         }
         return aRandWord;
     }
+
+    /* ----------------- Constructors ----------------- */
 
     public WordsGraph(String str) {
         /* Modify specific character. */
@@ -45,7 +51,7 @@ public class WordsGraph {
         /* Construct the words graph. */
 
         // Count how many words present and use the size to initialize the graph.
-        // This operation is needed because of the bad design of graph.
+        // This operation is needed because of the bad design of graph with adjacent matrix.
         // It should be solved.
         while (strScanner.hasNext()) {
             wordsSet.add(strScanner.next());
@@ -77,6 +83,8 @@ public class WordsGraph {
         }
     }
 
+    /* ----------------- Primary Methods ----------------- */
+
     public void showDirectedGraph() {
         // TODO: Implementation
     }
@@ -95,11 +103,6 @@ public class WordsGraph {
 
     public String[] calcShortestPath(String word1, String word2) {
         // TODO: Implementation
-    }
-
-    public void resetWalk() {
-        presentWordInWalk = null;
-        flagOfWalk = false;
     }
 
     public String randomWalk() {
@@ -136,5 +139,18 @@ public class WordsGraph {
         String tempStr = presentWordInWalk;
         presentWordInWalk = tgtWord;
         return tempStr;
+    }
+
+    /* ----------------- Extra Methods ----------------- */
+
+    // Reset the random walk.
+    public void resetWalk() {
+        presentWordInWalk = null;
+        flagOfWalk = false;
+    }
+
+    // Test whether a word is in the words graph.
+    public boolean containsWords(String word) {
+        return wordsSet.contains(word);
     }
 }
