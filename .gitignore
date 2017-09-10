@@ -51,3 +51,5 @@ fabric.properties
 test.txt
 random-walk-trace.txt
 tmp/
+wordsGraph.gif
+dotsource.dot
