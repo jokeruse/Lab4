@@ -73,6 +73,8 @@ Implement a program which generates a directed graph with a text file.
         * first, you should create a StringBuilder object and use createArcFormat() to form a dotFormat string.
         * then call createDotGraph() with dotFormat string you've just created,
         * and finally call the displayPic().
+        *
+        * Attention: isEmphasized indicates whether an arc should be displayed in red.
         */
         
         // Add an arc into graph-viz format file.
