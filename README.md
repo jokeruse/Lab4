@@ -61,7 +61,7 @@ Implement a program which generates a directed graph with a text file.
         String presentWordInWalk;               // The present word in the random walk.
         boolean flagOfWalk = false;             // Flag to indicate whether an arc is just visited twice in the walk.
         ```
-        
+                
     2. Methods:
         1. [**Constructor**]Read in a file and translate it into a direct graph.
         
@@ -140,6 +140,22 @@ Implement a program which generates a directed graph with a text file.
             |    Name    | Parameter Type | Return Value Type |
             |:----------:|:--------------:|:-----------------:|
             | randomWalk |        -       |       String      |
+           
+        8. [**EXTRA**]Reset the random walk.
+        
+            **Interface:**
+            
+            |    Name   | Parameter Type | Return Value Type |
+            |:---------:|:--------------:|:-----------------:|
+            | resetWalk |        -       |        void       |
+            
+        9. [**EXTRA**]Test whether a word is in the words graph.
+        
+            **Interface:**
+            
+            |      Name     | Parameter Type | Return Value Type |
+            |:-------------:|:--------------:|:-----------------:|
+            | containsWords |     String     |      boolean      |
             
 ## Collaborators
 [@ANDI_Mckee](https://github.com/ANDI-Mckee)
