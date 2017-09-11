@@ -63,9 +63,9 @@ public class Main {
 
             in = new Scanner(System.in);
 
-            String word1 = "seek";
+            String word1 = in.next();
             System.out.print("Word 2: ");
-            String word2 = "new";
+            String word2 = in.next();
             String[] bridgeWords = wordsGraph.queryBridgeWords(word1, word2);
             if (! wordsGraph.containsWords(word1) || ! wordsGraph.containsWords(word2)) {
                 System.out.println("No word1 or word2 in the graph!");
