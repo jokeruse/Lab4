@@ -1,8 +1,12 @@
 package org.hitbioinfo.exp1;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.xml.bind.util.ValidationEventCollector;
 import java.awt.image.BufferedImage;
+import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -16,6 +20,11 @@ public class WordsGraph {
     private Set<String> wordsSet = new HashSet<>(); // Store all the words present.
     private String presentWordInWalk;   // The present word in the random walk.
     private boolean flagOfWalk = false; // Flag to indicate whether an arc is just visited twice in the walk.
+    private static final int INF = 1000000007; // Init the distance;
+    private HashMap<String, Integer> ShortDistance = new HashMap<>(); // Record the distance from a special word
+    private HashMap<String, Boolean> VerticesinQueue = new HashMap<>(); // Record the distance from a special word
+    private HashMap<String, Vector<String> > Front = new HashMap<>(); // Record the distance from a special word
+    private List<String> RecordPath = new ArrayList<>(); // Record the distance from a special word
 
     /* ----------------- Utility Function ----------------- */
 
@@ -97,6 +106,55 @@ public class WordsGraph {
             System.err.println(ex.getMessage());
         }
     }
+
+    private void ShortPath(String word){
+        for(String i : wordsSet){
+            ShortDistance.put(i, INF);
+            VerticesinQueue.put(i, Boolean.FALSE);
+            Front.put(i, new Vector<>());
+            Front.get(i).add("");
+        }
+        ShortDistance.put(word, 0);
+        Queue<String> q = new ArrayDeque<>();
+        q.add(word);
+        while ( !q.isEmpty() ){
+            String now = q.remove();
+            List<String> adjVertices = mWordsGraph.adjacentVertices(now);
+            for(String i : adjVertices){
+                if(ShortDistance.get(i) > ShortDistance.get(now) + mWordsGraph.getWeight(now, i)){
+                    ShortDistance.put(i, ShortDistance.get(now) + mWordsGraph.getWeight(now, i));
+                    Front.put(i, new Vector<>());
+                    Front.get(i).add(now);
+                    if(!VerticesinQueue.get(i)){
+                        q.add(i);
+                        VerticesinQueue.put(i, Boolean.TRUE);
+                    }
+                }
+                else if(ShortDistance.get(i) == ShortDistance.get(now) + mWordsGraph.getWeight(now, i)){
+                    Front.get(i).add(now);
+                }
+            }
+            VerticesinQueue.put(now, Boolean.TRUE);
+        }
+
+    }
+
+    public static String reverse(String str)
+    {
+        return new StringBuffer(str).reverse().toString();
+    }
+
+    private void GetPath(String word, String tempPath){
+
+        if(word.equals("")){
+            RecordPath.add(reverse(tempPath));
+            return;
+        }
+        for(int i = 0; i < Front.get(word).size(); i ++){
+            GetPath(Front.get(word).elementAt(i), tempPath + " >- " + reverse(word));
+        }
+    }
+
 
     /* ----------------- Constructors ----------------- */
 
@@ -223,13 +281,44 @@ public class WordsGraph {
     }
 
     public String[] calcShortestPath(String word) {
-        // TODO: Implementation
-        return  null;
+        ShortPath(word);
+        String[] Path = new String[mSize - 1];
+        int cnt = 0;
+        for(String i : wordsSet){
+            if(i.equals(word)) continue;
+            if(ShortDistance.get(i).equals(INF)) {
+                Path[cnt ++] = word + "->" + i + ": Unreachable";
+                continue;
+            }
+            String P = new String("");
+            Stack<String> Q = new Stack<>();
+            String temp = i;
+            while (!Front.get(temp).elementAt(0).equals("")){
+                Q.push(temp);
+                temp = Front.get(temp).elementAt(0);
+            }
+            P += word;
+            while (!Q.empty()){
+                P += " -> " + Q.pop();
+            }
+            Path[cnt ++] = P;
+        }
+        return Path;
     }
 
     public String[] calcShortestPath(String word1, String word2) {
-        // TODO: Implementation
-        return  null;
+        ShortPath(word1);
+        if(ShortDistance.get(word2).equals(INF)){
+            return new String[]{};
+        }
+        for(int i = 0; i < Front.get(word2).size(); i ++){
+            GetPath(Front.get(word2).elementAt(i), reverse(word2));
+        }
+        String[] ShortestPath = new String[RecordPath.size()];
+        for(int i = 0; i < RecordPath.size(); i ++){
+            ShortestPath[i] = RecordPath.get(i);
+        }
+        return ShortestPath;
     }
 
     public String randomWalk() {

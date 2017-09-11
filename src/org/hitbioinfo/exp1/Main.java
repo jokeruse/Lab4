@@ -62,10 +62,10 @@ public class Main {
             System.out.print("Word 1: ");
 
             in = new Scanner(System.in);
-
             String word1 = in.next();
             System.out.print("Word 2: ");
             String word2 = in.next();
+
             String[] bridgeWords = wordsGraph.queryBridgeWords(word1, word2);
             if (! wordsGraph.containsWords(word1) || ! wordsGraph.containsWords(word2)) {
                 System.out.println("No word1 or word2 in the graph!");
@@ -86,7 +86,8 @@ public class Main {
             }
             System.out.println();
 
-            //in.nextLine();
+            in.nextLine();
+
             // Generate new text in terms of the newly input text and the graph.
             System.out.println("Please input a text in a single line:");
             String inputText = in.nextLine();
