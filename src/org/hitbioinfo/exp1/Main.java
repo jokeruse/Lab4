@@ -61,28 +61,31 @@ public class Main {
             System.out.println("Please input two words to find their bridge words.");
             System.out.print("Word 1: ");
 
-            in = new Scanner(System.in);
+            in = new Scanner(System.in);    // Set in as System.in.
             String word1 = in.next();
             System.out.print("Word 2: ");
             String word2 = in.next();
 
-            String[] bridgeWords = wordsGraph.queryBridgeWords(word1, word2);
             if (! wordsGraph.containsWords(word1) || ! wordsGraph.containsWords(word2)) {
-                System.out.println("No word1 or word2 in the graph!");
-            } else if (bridgeWords.length == 0) {
-                System.out.println("No bridge words from word1 to word2!");
-            } else if (bridgeWords.length == 1) {
-                System.out.println("The bridge words from word1 to word2 is: "
-                        + bridgeWords[0] + ".");
+                wordsNotFound(word1, word2, wordsGraph);
             } else {
-                System.out.print("The bridge words from word1 to word2 are: ");
+                String[] bridgeWords = wordsGraph.queryBridgeWords(word1, word2);
 
-                // Print words except the last one in the FOR LOOP.
-                for (int i = 0; i < bridgeWords.length - 2; ++i) {
-                    System.out.print(bridgeWords[i] + ", ");
+                if (bridgeWords.length == 0) {
+                    System.out.println("No bridge words from '" + word1 + "' to '" + word2 + " '!");
+                } else if (bridgeWords.length == 1) {
+                    System.out.println("The bridge word from '" + word1 + "' to '" + word2 + "' is: "
+                            + bridgeWords[0] + ".");
+                } else {
+                    System.out.print("The bridge words from '" + word1 + "' to '" + word2 + "' are: ");
+
+                    // Print words except the last one in the FOR LOOP.
+                    for (int i = 0; i < bridgeWords.length - 2; ++i) {
+                        System.out.print(bridgeWords[i] + ", ");
+                    }
+                    System.out.println(bridgeWords[bridgeWords.length - 2] + " and "
+                            + bridgeWords[bridgeWords.length - 1] + ".");
                 }
-                System.out.println(bridgeWords[bridgeWords.length - 2] + " and "
-                        + bridgeWords[bridgeWords.length - 1] + ".");
             }
             System.out.println();
 
@@ -101,13 +104,21 @@ public class Main {
             word1 = in.next();
             System.out.print("Word2: ");
             word2 = in.next();
-            System.out.println("The shortest path(s) are:");
-            String[] paths = wordsGraph.calcShortestPath(word1, word2);
-            if (paths.length == 0) {
-                System.out.println("There is no path from word1 to word2.");
+
+            if (! wordsGraph.containsWords(word1) || ! wordsGraph.containsWords(word2)) {
+                wordsNotFound(word1, word2, wordsGraph);
             } else {
-                for (String path : paths) {
-                    System.out.println(path);
+                String[] paths = wordsGraph.calcShortestPath(word1, word2);
+                if (paths.length == 0) {
+                    System.out.println("There is no path from word1 to word2.");
+                } else if (paths.length == 1) {
+                    System.out.println("The shortest path is:");
+                    System.out.println(paths[0]);
+                } else {
+                    System.out.println("The shortest paths are:");
+                    for (String path : paths) {
+                        System.out.println(path);
+                    }
                 }
             }
             System.out.println();
@@ -115,10 +126,10 @@ public class Main {
             // Get all shortest paths from one word to other words.
             System.out.println("Please input a word to find all shortest path(s) to other words if existed:");
             String word = in.next();
-            paths = wordsGraph.calcShortestPath(word);
-            if (paths.length == 0) {
-                System.out.println("There is no path from this word to other words.");
+            if (! wordsGraph.containsWords(word)) {
+                wordsNotFound(word);
             } else {
+                String[] paths = wordsGraph.calcShortestPath(word);
                 for (String path : paths) {
                     System.out.println(path);
                 }
@@ -163,6 +174,22 @@ public class Main {
 
         } else {
             System.out.println("Attention: Bad parameter. See 'wordsToGraph -h'.");
+        }
+    }
+
+    private static void wordsNotFound(String word) {
+        System.out.println("No '" + word + "' in the graph!");
+    }
+
+    private static void wordsNotFound(String word1, String word2, WordsGraph graph) {
+        if (graph.containsWords(word1) && ! graph.containsWords(word2)) {
+            System.out.println("No '" + word2 + "' in the graph!");
+        } else if (! graph.containsWords(word1) && graph.containsWords(word2)) {
+            System.out.println("No '" + word1 + "' in the graph!");
+        } else if (! graph.containsWords(word1) && ! graph.containsWords(word2)) {
+            System.out.println("No '" + word1 + "' and '" + word2 + "' in the graph!");
+        } else {
+            throw new RuntimeException("Error: Bad parameters in wordsNotFound().");
         }
     }
 }
