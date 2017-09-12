@@ -140,13 +140,19 @@ Implement a program which generates a directed graph with a text file.
             |:----------------:|:--------------:|:-----------------:|
             | calcShortestPath | String, String |      String[]     |
             
-        6. Get all shortest paths from one word to other words. (Requirements are the same to the above.)
+        6. Get all shortest paths from one word to other words.
          
             **Interface:**
             
             |       Name       | Parameter Type | Return Value Type |
             |:----------------:|:--------------:|:-----------------:|
             | calcShortestPath |     String     |      String[]     |
+            
+            **Requirements:**
+            
+            1. If there are several shortest paths from this word, return them all.
+            2. If there is no shortest path from this word to another, mark it as "Unreachable".
+            3. The shortest path(s) should be showed in the form like "to -> explore -> band".
             
         7. Traverse the graph from a random words as a start point.
          
