@@ -3,6 +3,7 @@ package org.hitbioinfo.exp1;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.imageio.ImageIO;
+import javax.lang.model.element.NestingKind;
 import javax.swing.*;
 import javax.xml.bind.util.ValidationEventCollector;
 import java.awt.image.BufferedImage;
@@ -25,6 +26,7 @@ public class WordsGraph {
     private HashMap<String, Boolean> VerticesinQueue = new HashMap<>(); // Record the distance from a special word
     private HashMap<String, Vector<String> > Front = new HashMap<>(); // Record the distance from a special word
     private List<String> RecordPath = new ArrayList<>(); // Record the distance from a special word
+    private List<String> WordPath = new ArrayList<>();
 
     /* ----------------- Utility Function ----------------- */
 
@@ -139,20 +141,22 @@ public class WordsGraph {
 
     }
 
-    public static String reverse(String str)
-    {
-        return new StringBuffer(str).reverse().toString();
-    }
 
-    private void GetPath(String word, String tempPath){
+    private void GetPath(String word){
 
         if(word.equals("")){
-            RecordPath.add(reverse(tempPath));
+            StringBuilder tempPath = new StringBuilder(WordPath.get(WordPath.size() - 1));
+            for(int i = WordPath.size() - 2; i >= 0; i --){
+                tempPath.append(" -> " +  WordPath.get(i));
+            }
+            RecordPath.add(tempPath.toString());
             return;
         }
+        WordPath.add(word);
         for(int i = 0; i < Front.get(word).size(); i ++){
-            GetPath(Front.get(word).elementAt(i), tempPath + " >- " + reverse(word));
+            GetPath(Front.get(word).elementAt(i));
         }
+        WordPath.remove(WordPath.size() - 1);
     }
 
 
@@ -228,7 +232,7 @@ public class WordsGraph {
         }
 
         createDotGraph(builder.toString(), "wordsGraph");
-        //displayPic("wordsGraph.gif");
+        displayPic("wordsGraph.gif");
     }
 
     public String[] queryBridgeWords(String word1, String word2) {
@@ -254,13 +258,14 @@ public class WordsGraph {
 
     public String generateNewText(String aString){
         List<String> WordList = new ArrayList<String>();
-        for(int i = 0; i < aString.length(); i ++){
-            if( (aString.charAt(i) >= 'a' && aString.charAt(i) <= 'z')
-              ||(aString.charAt(i) >= 'A' && aString.charAt(i) <= 'Z')){
+        StringBuilder builder = new StringBuilder(aString.replaceAll("[^a-zA-Z]+[^a-zA-Z]*", " "));
+        for(int i = 0; i < builder.length(); i ++){
+            if( (builder.charAt(i) >= 'a' && builder.charAt(i) <= 'z')
+              ||(builder.charAt(i) >= 'A' && builder.charAt(i) <= 'Z')){
                 String temp = new String("");
                 int j;
-                for(j = i; j < aString.length() && !Character.isWhitespace(aString.charAt(j)); j ++){
-                    temp += aString.charAt(j);
+                for(j = i; j < builder.length() && !Character.isWhitespace(builder.charAt(j)); j ++){
+                    temp += builder.charAt(j);
                 }
                 WordList.add(temp);
                 i = j;
@@ -311,14 +316,13 @@ public class WordsGraph {
         if(ShortDistance.get(word2).equals(INF)){
             return new String[]{};
         }
-        for(int i = 0; i < Front.get(word2).size(); i ++){
-            GetPath(Front.get(word2).elementAt(i), reverse(word2));
-        }
+        GetPath(word2);
         String[] ShortestPath = new String[RecordPath.size()];
         for(int i = 0; i < RecordPath.size(); i ++){
             ShortestPath[i] = RecordPath.get(i);
         }
         return ShortestPath;
+
     }
 
     public String randomWalk() {
