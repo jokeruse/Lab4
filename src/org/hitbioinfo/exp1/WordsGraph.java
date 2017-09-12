@@ -1,12 +1,8 @@
 package org.hitbioinfo.exp1;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.xml.bind.util.ValidationEventCollector;
 import java.awt.image.BufferedImage;
-import java.io.Console;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -22,8 +18,8 @@ public class WordsGraph {
     private boolean flagOfWalk = false; // Flag to indicate whether an arc is just visited twice in the walk.
     private static final int INF = 1000000007; // Init the distance;
     private HashMap<String, Integer> ShortDistance = new HashMap<>(); // Record the distance from a special word
-    private HashMap<String, Boolean> VerticesinQueue = new HashMap<>(); // Record the distance from a special word
-    private HashMap<String, Vector<String> > Front = new HashMap<>(); // Record the distance from a special word
+    private HashMap<String, Boolean> VerticesInQueue = new HashMap<>(); // Record the distance from a special word
+    private HashMap<String, Vector<String>> Front = new HashMap<>(); // Record the distance from a special word
     private List<String> RecordPath = new ArrayList<>(); // Record the distance from a special word
 
     /* ----------------- Utility Function ----------------- */
@@ -60,7 +56,7 @@ public class WordsGraph {
     }
 
     // Create dot graph.
-    private void createDotGraph(String dotFormat,String fileName) {
+    private void createDotGraph(String dotFormat, String fileName) {
         GraphViz gv = new GraphViz();
         gv.addln(gv.start_graph());
         gv.add(dotFormat);
@@ -69,8 +65,8 @@ public class WordsGraph {
         gv.increaseDpi();
         gv.increaseDpi();
         gv.increaseDpi();
-        File out = new File(fileName+"."+ type);
-        gv.writeGraphToFile( gv.getGraph( gv.getDotSource(), type ), out);
+        File out = new File(fileName + "." + type);
+        gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type), out);
     }
 
     // Display picture file.
@@ -85,7 +81,7 @@ public class WordsGraph {
             URL url = new File(fileName).toURI().toURL();
             BufferedImage img = ImageIO.read(url);
 
-             /* until here */
+            /* Until here */
 
             // Add the image as ImageIcon to the label.
             pictureLabel.setIcon(new ImageIcon(img));
@@ -107,50 +103,48 @@ public class WordsGraph {
         }
     }
 
-    private void ShortPath(String word){
-        for(String i : wordsSet){
+    private void ShortPath(String word) {
+        for (String i : wordsSet) {
             ShortDistance.put(i, INF);
-            VerticesinQueue.put(i, Boolean.FALSE);
+            VerticesInQueue.put(i, Boolean.FALSE);
             Front.put(i, new Vector<>());
             Front.get(i).add("");
         }
         ShortDistance.put(word, 0);
         Queue<String> q = new ArrayDeque<>();
         q.add(word);
-        while ( !q.isEmpty() ){
+        while (!q.isEmpty()) {
             String now = q.remove();
             List<String> adjVertices = mWordsGraph.adjacentVertices(now);
-            for(String i : adjVertices){
-                if(ShortDistance.get(i) > ShortDistance.get(now) + mWordsGraph.getWeight(now, i)){
+            for (String i : adjVertices) {
+                if (ShortDistance.get(i) > ShortDistance.get(now) + mWordsGraph.getWeight(now, i)) {
                     ShortDistance.put(i, ShortDistance.get(now) + mWordsGraph.getWeight(now, i));
                     Front.put(i, new Vector<>());
                     Front.get(i).add(now);
-                    if(!VerticesinQueue.get(i)){
+                    if (!VerticesInQueue.get(i)) {
                         q.add(i);
-                        VerticesinQueue.put(i, Boolean.TRUE);
+                        VerticesInQueue.put(i, Boolean.TRUE);
                     }
-                }
-                else if(ShortDistance.get(i) == ShortDistance.get(now) + mWordsGraph.getWeight(now, i)){
+                } else if (ShortDistance.get(i) == ShortDistance.get(now) + mWordsGraph.getWeight(now, i)) {
                     Front.get(i).add(now);
                 }
             }
-            VerticesinQueue.put(now, Boolean.TRUE);
+            VerticesInQueue.put(now, Boolean.TRUE);
         }
 
     }
 
-    public static String reverse(String str)
-    {
+    public static String reverse(String str) {
         return new StringBuffer(str).reverse().toString();
     }
 
-    private void GetPath(String word, String tempPath){
+    private void GetPath(String word, String tempPath) {
 
-        if(word.equals("")){
+        if (word.equals("")) {
             RecordPath.add(reverse(tempPath));
             return;
         }
-        for(int i = 0; i < Front.get(word).size(); i ++){
+        for (int i = 0; i < Front.get(word).size(); i++) {
             GetPath(Front.get(word).elementAt(i), tempPath + " >- " + reverse(word));
         }
     }
@@ -228,94 +222,94 @@ public class WordsGraph {
         }
 
         createDotGraph(builder.toString(), "wordsGraph");
-        //displayPic("wordsGraph.gif");
+        displayPic("wordsGraph.gif");
     }
 
     public String[] queryBridgeWords(String word1, String word2) {
-        List<String> tempBridgeWords = new ArrayList<String>();
-        if(!wordsSet.contains(word1))
+        List<String> tempBridgeWords = new ArrayList<>();
+        if (!wordsSet.contains(word1))
             return new String[]{};
         List<String> adjVertices = mWordsGraph.adjacentVertices(word1);
-        for(String tempWords : adjVertices){
-            List<String> tempadjVertices = mWordsGraph.adjacentVertices(tempWords);
-            for(String nexttempWords : tempadjVertices){
-                if(nexttempWords.equals(word2)){
+        for (String tempWords : adjVertices) {
+            List<String> tempAdjVertices = mWordsGraph.adjacentVertices(tempWords);
+            for (String nextTempWords : tempAdjVertices) {
+                if (nextTempWords.equals(word2)) {
                     tempBridgeWords.add(tempWords);
                     break;
                 }
             }
         }
         String[] BridgeWords = new String[tempBridgeWords.size()];
-        for(int i = 0; i < tempBridgeWords.size(); i ++){
+        for (int i = 0; i < tempBridgeWords.size(); i++) {
             BridgeWords[i] = tempBridgeWords.get(i);
         }
-        return  BridgeWords;
+        return BridgeWords;
     }
 
-    public String generateNewText(String aString){
-        List<String> WordList = new ArrayList<String>();
-        for(int i = 0; i < aString.length(); i ++){
-            if( (aString.charAt(i) >= 'a' && aString.charAt(i) <= 'z')
-              ||(aString.charAt(i) >= 'A' && aString.charAt(i) <= 'Z')){
+    public String generateNewText(String aString) {
+        List<String> WordList = new ArrayList<>();
+        for (int i = 0; i < aString.length(); i++) {
+            if ((aString.charAt(i) >= 'a' && aString.charAt(i) <= 'z')
+                    || (aString.charAt(i) >= 'A' && aString.charAt(i) <= 'Z')) {
                 String temp = new String("");
                 int j;
-                for(j = i; j < aString.length() && !Character.isWhitespace(aString.charAt(j)); j ++){
+                for (j = i; j < aString.length() && !Character.isWhitespace(aString.charAt(j)); j++) {
                     temp += aString.charAt(j);
                 }
                 WordList.add(temp);
                 i = j;
             }
         }
-        if(WordList.size() < 1) return aString;
+        if (WordList.size() < 1) return aString;
         String NewText = new String("");
         NewText += WordList.get(0);
-        for(int i = 1; i < WordList.size(); i ++){
+        for (int i = 1; i < WordList.size(); i++) {
             String[] BridgeWords = queryBridgeWords(WordList.get(i - 1).toLowerCase(), WordList.get(i).toLowerCase());
-            if(BridgeWords.length > 0) {
+            if (BridgeWords.length > 0) {
                 int p = new Random().nextInt(BridgeWords.length);
                 NewText += " " + BridgeWords[p];
             }
             NewText += " " + WordList.get(i);
         }
-        return  NewText;
+        return NewText;
     }
 
     public String[] calcShortestPath(String word) {
         ShortPath(word);
         String[] Path = new String[mSize - 1];
         int cnt = 0;
-        for(String i : wordsSet){
-            if(i.equals(word)) continue;
-            if(ShortDistance.get(i).equals(INF)) {
-                Path[cnt ++] = word + "->" + i + ": Unreachable";
+        for (String i : wordsSet) {
+            if (i.equals(word)) continue;
+            if (ShortDistance.get(i).equals(INF)) {
+                Path[cnt++] = word + " -> " + i + ": Unreachable";
                 continue;
             }
             String P = new String("");
             Stack<String> Q = new Stack<>();
             String temp = i;
-            while (!Front.get(temp).elementAt(0).equals("")){
+            while (!Front.get(temp).elementAt(0).equals("")) {
                 Q.push(temp);
                 temp = Front.get(temp).elementAt(0);
             }
             P += word;
-            while (!Q.empty()){
+            while (!Q.empty()) {
                 P += " -> " + Q.pop();
             }
-            Path[cnt ++] = P;
+            Path[cnt++] = P;
         }
         return Path;
     }
 
     public String[] calcShortestPath(String word1, String word2) {
         ShortPath(word1);
-        if(ShortDistance.get(word2).equals(INF)){
+        if (ShortDistance.get(word2).equals(INF)) {
             return new String[]{};
         }
-        for(int i = 0; i < Front.get(word2).size(); i ++){
+        for (int i = 0; i < Front.get(word2).size(); i++) {
             GetPath(Front.get(word2).elementAt(i), reverse(word2));
         }
         String[] ShortestPath = new String[RecordPath.size()];
-        for(int i = 0; i < RecordPath.size(); i ++){
+        for (int i = 0; i < RecordPath.size(); i++) {
             ShortestPath[i] = RecordPath.get(i);
         }
         return ShortestPath;
