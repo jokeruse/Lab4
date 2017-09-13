@@ -1,7 +1,6 @@
 package org.hitbioinfo.exp1;
 
 import javax.imageio.ImageIO;
-import javax.lang.model.element.NestingKind;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -96,6 +95,7 @@ public class WordsGraph {
             // but only using showPictureFrame.setVisible(true); would also work.
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
+                    showPictureFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     showPictureFrame.setVisible(true);
                 }
             });
@@ -252,7 +252,7 @@ public class WordsGraph {
     }
 
     public String generateNewText(String aString){
-        List<String> WordList = new ArrayList<String>();
+        List<String> WordList = new ArrayList<>();
         StringBuilder builder = new StringBuilder(aString.replaceAll("[^a-zA-Z]+[^a-zA-Z]*", " "));
         for(int i = 0; i < builder.length(); i ++){
             if( (builder.charAt(i) >= 'a' && builder.charAt(i) <= 'z')
@@ -267,17 +267,17 @@ public class WordsGraph {
             }
         }
         if (WordList.size() < 1) return aString;
-        String NewText = new String("");
-        NewText += WordList.get(0);
+        String newText = new String("");
+        newText += WordList.get(0);
         for (int i = 1; i < WordList.size(); i++) {
             String[] BridgeWords = queryBridgeWords(WordList.get(i - 1).toLowerCase(), WordList.get(i).toLowerCase());
             if (BridgeWords.length > 0) {
                 int p = new Random().nextInt(BridgeWords.length);
-                NewText += " " + BridgeWords[p];
+                newText += " " + BridgeWords[p];
             }
-            NewText += " " + WordList.get(i);
+            newText += " " + WordList.get(i);
         }
-        return NewText;
+        return newText;
     }
 
     public String[] calcShortestPath(String word) {
