@@ -95,15 +95,14 @@ public class Main {
                     }
                 }
 
-                boolean breakInLoop2 = false;
+                boolean breakInLoop = false;
 
                 switch (opNumber) {
-                    case 1: {
-                        // Find bridge words from word1 to word2.
+                    case 1: {   // Find bridge words from word1 to word2.
                         System.out.println("Please input two words to find their bridge words.");
                         System.out.print("Word 1: ");
 
-                        in = new Scanner(System.in);    // Set in as System.in.
+                        in = new Scanner(System.in);    // Set "in" as "System.in".
                         String word1 = in.next();
                         System.out.print("Word 2: ");
                         String word2 = in.next();
@@ -133,16 +132,14 @@ public class Main {
 
                         in.nextLine();
                         break;
-                    } case 2: {
-                        // Generate new text in terms of the newly input text and the graph.
+                    } case 2: { // Generate new text in terms of the newly input text and the graph.
                         System.out.println("Please input a text in a single line:");
                         String inputText = in.nextLine();
                         System.out.println("The text is:");
                         System.out.println(wordsGraph.generateNewText(inputText));
                         System.out.println();
                         break;
-                    } case 3: {
-                        // Get the shortest path(s) from word1 to word2 in the graph.
+                    } case 3: { // Get the shortest path(s) from word1 to word2 in the graph.
                         System.out.println("Please input two words to find shortest path(s) from word1 to word2.");
                         System.out.print("Word1: ");
                         String word1 = in.next();
@@ -181,9 +178,8 @@ public class Main {
                         }
                         System.out.println();
                         break;
-                    } case 5: {
-                        // Traverse the graph from a random word as a start point.
-                        // And write the result to disk.
+                    } case 5: { // Traverse the graph from a random word as a start point.
+                                // And write the result into disk.
                         System.out.println("The random traversal path is:");
                         wordsGraph.resetWalk();
                         builder = new StringBuilder();
@@ -203,7 +199,7 @@ public class Main {
                                     + presentWord + ". Input 'y' to continue.  ");
                             String ans = in.next();
 
-                            if (!ans.equals("y") && !ans.equals("Y")) {   // Stop by user's input.
+                            if (!ans.equals("y") && !ans.equals("Y")) {   // Stopped by user's input.
                                 System.out.println("The walk is over.");
                                 break;
                             }
@@ -220,14 +216,14 @@ public class Main {
                         }
                         break;
                     } case 6: {
-                        breakInLoop2 = true;
+                        breakInLoop = true;
                         break;
                     } default: {
                         throw new RuntimeException("Error: Unexpected switch case.");
 
                     }
                 }
-                if (breakInLoop2) {
+                if (breakInLoop) {
                     break;
                 }
             }
@@ -236,6 +232,7 @@ public class Main {
         }
     }
 
+    // Two utility functions to print the "WordsNotFound" prompt.
     private static void wordsNotFound(String word) {
         System.out.println("No '" + word + "' in the graph!");
     }
