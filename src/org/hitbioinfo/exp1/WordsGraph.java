@@ -1,7 +1,6 @@
 package org.hitbioinfo.exp1;
 
 import javax.imageio.ImageIO;
-import javax.lang.model.element.NestingKind;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;

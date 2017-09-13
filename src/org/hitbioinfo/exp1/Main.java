@@ -14,6 +14,7 @@ public class Main {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
+        return;
     }
 
     // It is A utility function to run the main process of the program.
@@ -94,7 +95,7 @@ public class Main {
                     }
                 }
 
-                boolean breakInLoop = false;
+                boolean breakInLoop2 = false;
 
                 switch (opNumber) {
                     case 1: {
@@ -165,6 +166,7 @@ public class Main {
                             }
                         }
                         System.out.println();
+                        break;
                     } case 4: {
                         // Get all shortest paths from one word to other words.
                         System.out.println("Please input a word to find all shortest path(s) to other words if existed:");
@@ -218,13 +220,14 @@ public class Main {
                         }
                         break;
                     } case 6: {
-                        breakInLoop = true;
+                        breakInLoop2 = true;
                         break;
                     } default: {
                         throw new RuntimeException("Error: Unexpected switch case.");
+
                     }
                 }
-                if (breakInLoop) {
+                if (breakInLoop2) {
                     break;
                 }
             }
