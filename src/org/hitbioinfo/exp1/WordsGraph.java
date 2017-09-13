@@ -257,27 +257,27 @@ public class WordsGraph {
         for(int i = 0; i < builder.length(); i ++){
             if( (builder.charAt(i) >= 'a' && builder.charAt(i) <= 'z')
               ||(builder.charAt(i) >= 'A' && builder.charAt(i) <= 'Z')){
-                String temp = new String("");
+                StringBuilder temp = new StringBuilder("");
                 int j;
                 for(j = i; j < builder.length() && !Character.isWhitespace(builder.charAt(j)); j ++){
-                    temp += builder.charAt(j);
+                    temp.append(builder.charAt(j));
                 }
-                WordList.add(temp);
+                WordList.add(temp.toString());
                 i = j;
             }
         }
         if (WordList.size() < 1) return aString;
-        String newText = new String("");
-        newText += WordList.get(0);
+        StringBuilder newText = new StringBuilder("");
+        newText.append(WordList.get(0));
         for (int i = 1; i < WordList.size(); i++) {
             String[] BridgeWords = queryBridgeWords(WordList.get(i - 1).toLowerCase(), WordList.get(i).toLowerCase());
             if (BridgeWords.length > 0) {
                 int p = new Random().nextInt(BridgeWords.length);
-                newText += " " + BridgeWords[p];
+                newText.append(" " + BridgeWords[p]);
             }
-            newText += " " + WordList.get(i);
+            newText.append(" " + WordList.get(i));
         }
-        return newText;
+        return newText.toString();
     }
 
     public String[] calcShortestPath(String word) {
@@ -290,18 +290,18 @@ public class WordsGraph {
                 Path[cnt++] = word + " -> " + i + ": Unreachable";
                 continue;
             }
-            String P = new String("");
+            StringBuilder P = new StringBuilder("");
             Stack<String> Q = new Stack<>();
             String temp = i;
             while (!Front.get(temp).elementAt(0).equals("")) {
                 Q.push(temp);
                 temp = Front.get(temp).elementAt(0);
             }
-            P += word;
+            P.append(word);
             while (!Q.empty()) {
-                P += " -> " + Q.pop();
+                P.append(" -> " + Q.pop());
             }
-            Path[cnt++] = P;
+            Path[cnt++] = P.toString();
         }
         return Path;
     }

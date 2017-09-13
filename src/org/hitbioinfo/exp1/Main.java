@@ -228,6 +228,7 @@ public class Main {
                 }
             }
         } else {
+
             System.out.println("Attention: Bad parameter. See 'wordsToGraph -h'.");
         }
     }
