@@ -2,11 +2,13 @@ package org.hitbioinfo.exp1;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 public class WordsGraph {
     /* ----------------- Instance Filed ----------------- */
@@ -68,41 +70,6 @@ public class WordsGraph {
         gv.increaseDpi();
         File out = new File(fileName + "." + type);
         gv.writeGraphToFile(gv.getGraph(gv.getDotSource(), type), out);
-    }
-
-    // Display picture file.
-    private void displayPic(String fileName) {
-        try {
-            // This is a new frame, where the picture should be shown.
-            final JFrame showPictureFrame = new JFrame(fileName);
-            JLabel pictureLabel = new JLabel();
-
-            /* Read the image */
-
-            URL url = new File(fileName).toURI().toURL();
-            BufferedImage img = ImageIO.read(url);
-
-            /* Until here */
-
-            // Add the image as ImageIcon to the label.
-            pictureLabel.setIcon(new ImageIcon(img));
-            // Add the label to the frame.
-            showPictureFrame.add(pictureLabel);
-            // Pack everything (does many stuff. e.g. resize the frame to fit the image)
-            showPictureFrame.pack();
-
-            // This is how you should open a new Frame or Dialog
-            // but only using showPictureFrame.setVisible(true); would also work.
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    showPictureFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    showPictureFrame.setVisible(true);
-                }
-            });
-        } catch (IOException ex) {
-            System.err.println("Some IOException occurred (did you set the right path?): ");
-            System.err.println(ex.getMessage());
-        }
     }
 
     private void ShortPath(String word) {
@@ -227,7 +194,11 @@ public class WordsGraph {
         }
 
         createDotGraph(builder.toString(), "wordsGraph");
-        displayPic("wordsGraph.gif");
+        try {
+            Desktop.getDesktop().open(new File("wordsGraph.gif"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String[] queryBridgeWords(String word1, String word2) {
