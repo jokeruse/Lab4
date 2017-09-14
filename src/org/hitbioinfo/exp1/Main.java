@@ -14,6 +14,7 @@ public class Main {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
+        return;
     }
 
     // It is A utility function to run the main process of the program.
@@ -162,7 +163,9 @@ public class Main {
                             }
                         }
                         System.out.println();
-                    } case 4: { // Get all shortest paths from one word to other words.
+                        break;
+                    } case 4: {
+                        // Get all shortest paths from one word to other words.
                         System.out.println("Please input a word to find all shortest path(s) to other words if existed:");
                         String word = in.next();
                         if (!wordsGraph.containsWords(word)) {
@@ -217,6 +220,7 @@ public class Main {
                         break;
                     } default: {
                         throw new RuntimeException("Error: Unexpected switch case.");
+
                     }
                 }
                 if (breakInLoop) {
@@ -224,6 +228,7 @@ public class Main {
                 }
             }
         } else {
+
             System.out.println("Attention: Bad parameter. See 'wordsToGraph -h'.");
         }
     }

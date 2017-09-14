@@ -72,7 +72,7 @@ Implement a program which generates a directed graph with a text file.
         * To display a words graph,
         * first, you should create a StringBuilder object and use createArcFormat() to form a dotFormat string.
         * then call createDotGraph() with dotFormat string you've just created,
-        * and finally call the displayPic().
+        * and finally call the Desktop.getDesktop().open(File).
         *
         * Attention: isEmphasized indicates whether an arc should be displayed in red.
         */
@@ -82,9 +82,6 @@ Implement a program which generates a directed graph with a text file.
         
         // Create dot graph.
         void createDotGraph(String dotFormat,String fileName);
-        
-        // Display picture file.
-        void displayPic(String fileName);
         ```
     
     3. Public Methods:
