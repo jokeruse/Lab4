@@ -14,7 +14,6 @@ public class Main {
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
-        return;
     }
 
     // It is A utility function to run the main process of the program.
@@ -81,6 +80,9 @@ public class Main {
                             breakInLoop = true;
                             break;
                         }
+                    }
+                    if (rawOpNumber.length() == 0) {
+                        breakInLoop = true;
                     }
                     if (breakInLoop) {
                         System.out.println("Invalid input! Please input again:");
@@ -191,6 +193,7 @@ public class Main {
                             // Test whether the walk is over.
                             if (presentWord.equals("")) {
                                 System.out.println("The walk is over.");
+                                System.out.println();
                                 break;
                             }
 
@@ -201,6 +204,7 @@ public class Main {
 
                             if (!ans.equals("y") && !ans.equals("Y")) {   // Stopped by user's input.
                                 System.out.println("The walk is over.");
+                                System.out.println();
                                 break;
                             }
                         }

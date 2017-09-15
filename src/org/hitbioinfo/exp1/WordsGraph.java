@@ -1,12 +1,8 @@
 package org.hitbioinfo.exp1;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 import java.util.List;
 
@@ -108,7 +104,7 @@ public class WordsGraph {
         if(word.equals("")){
             StringBuilder tempPath = new StringBuilder(WordPath.get(WordPath.size() - 1));
             for(int i = WordPath.size() - 2; i >= 0; i --){
-                tempPath.append(" -> " +  WordPath.get(i));
+                tempPath.append(" -> ").append(WordPath.get(i));
             }
             RecordPath.add(tempPath.toString());
             return;
@@ -244,9 +240,9 @@ public class WordsGraph {
             String[] BridgeWords = queryBridgeWords(WordList.get(i - 1).toLowerCase(), WordList.get(i).toLowerCase());
             if (BridgeWords.length > 0) {
                 int p = new Random().nextInt(BridgeWords.length);
-                newText.append(" " + BridgeWords[p]);
+                newText.append(" ").append(BridgeWords[p]);
             }
-            newText.append(" " + WordList.get(i));
+            newText.append(" ").append(WordList.get(i));
         }
         return newText.toString();
     }
@@ -270,7 +266,7 @@ public class WordsGraph {
             }
             P.append(word);
             while (!Q.empty()) {
-                P.append(" -> " + Q.pop());
+                P.append(" -> ").append(Q.pop());
             }
             Path[cnt++] = P.toString();
         }
