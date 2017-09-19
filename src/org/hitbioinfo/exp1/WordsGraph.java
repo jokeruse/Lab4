@@ -278,6 +278,7 @@ public class WordsGraph {
         if (ShortDistance.get(word2).equals(INF)) {
             return new String[]{};
         }
+        RecordPath = new ArrayList<>();
         GetPath(word2);
         String[] ShortestPath = new String[RecordPath.size()];
         for (int i = 0; i < RecordPath.size(); i++) {
