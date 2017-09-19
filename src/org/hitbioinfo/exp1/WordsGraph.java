@@ -168,6 +168,7 @@ public class WordsGraph {
 
             srcWord = tgtWord;
         }
+        strScanner.close();
     }
 
     /* ----------------- Primary Methods ----------------- */

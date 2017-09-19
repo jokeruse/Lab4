@@ -35,15 +35,21 @@ public class Main {
             }
 
             // Read in the text.
-            Scanner in;
+            // AND HANDLE THE EXCEPTION.
+            Scanner in = null;
+            StringBuilder builder;
             try {
                 in = new Scanner(inputFile, "UTF-8");
+                builder = new StringBuilder();
+                while (in.hasNextLine()) {
+                    builder.append(in.nextLine());
+                }
             } catch (FileNotFoundException e) {
                 throw new RuntimeException("Attention: The file is not found!");
-            }
-            StringBuilder builder = new StringBuilder();
-            while (in.hasNextLine()) {
-                builder.append(in.nextLine());
+            } finally {
+                if (in != null) {
+                    in.close();
+                }
             }
             String rawInput = builder.toString();
 
