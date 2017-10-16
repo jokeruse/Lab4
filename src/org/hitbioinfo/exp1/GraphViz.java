@@ -1,7 +1,5 @@
 package org.hitbioinfo.exp1;
-//commit on branch B1
-
-//commit on branch C4
+//commit by fake_fan
 
 // GraphViz.java - a simple API to call dot from Java programs
 
