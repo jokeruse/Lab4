@@ -1,5 +1,5 @@
 package org.hitbioinfo.exp1;
-// commit by fake_fan
+
 // GraphViz.java - a simple API to call dot from Java programs
 
 /*$Id$*/
