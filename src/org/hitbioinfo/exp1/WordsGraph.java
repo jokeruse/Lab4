@@ -1,5 +1,7 @@
 package org.hitbioinfo.exp1;
 
+import sun.security.util.Length;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -216,17 +218,15 @@ public class WordsGraph {
       throw new RuntimeException(e);
     }
   }
-  /**
-   * a.
-   * @param word1.
-   * @param word2.
-   * @return.
-   */
-  
+
+
+
+
+
   public String[] querybridgewords(String word1, String word2) {
     List<String> tempbridgewords = new ArrayList<>();
-    if (!wordsSet.contains(word1)) {
-      return new String[]{};
+    if (mwordsgraph.adjacentVertices(word1).size() == 0) {
+        return new String[]{};
     }
     List<String> adjVertices = mwordsgraph.adjacentVertices(word1);
     for (String tempWords : adjVertices) {
