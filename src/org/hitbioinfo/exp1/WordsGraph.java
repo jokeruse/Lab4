@@ -323,10 +323,25 @@ public class WordsGraph {
    */
   
   public String[] calcshortestpath(String word1, String word2) {
+    String[] temp_result = new String[1];
+
+    if(!containsWords(word1) || !containsWords(word2)){
+      if(!containsWords(word1) && !containsWords(word2)){
+        temp_result[0] = "No '" + word1 + "' and '" + word2 + "' in the graph!";
+      }
+      else if(!containsWords(word1)){
+        temp_result[0] = "No '" + word1 + "' in the graph!";
+      }
+      else{
+        temp_result[0] = "No '" + word2 + "' in the graph!";
+      }
+      return temp_result;
+    }
     shortpath(word1);
     if (shortdistance.get(word2).equals(INF)) {
-      return new String[]{};
+      return new String[] {"There is no path from word1 to word2."};
     }
+
     recordpath = new ArrayList<>();
     getpath(word2);
     String[] shortestpath = new String[recordpath.size()];
@@ -334,7 +349,6 @@ public class WordsGraph {
       shortestpath[i] = recordpath.get(i);
     }
     return shortestpath;
-
   }
   /**
    * a.
