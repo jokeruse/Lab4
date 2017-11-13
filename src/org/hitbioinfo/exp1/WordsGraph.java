@@ -226,7 +226,7 @@ public class WordsGraph {
   public String[] querybridgewords(String word1, String word2) {
     List<String> tempbridgewords = new ArrayList<>();
     if (mwordsgraph.adjacentVertices(word1).size() == 0) {
-        return new String[]{};
+      return new String[]{};
     }
     List<String> adjVertices = mwordsgraph.adjacentVertices(word1);
     for (String tempWords : adjVertices) {
