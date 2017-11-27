@@ -246,6 +246,11 @@ public class DirectedGraph<T> {
 
     // Color a vertex. Return false if it is already colored.
 
+    /**
+     * a.
+     *
+     * @param vertex.
+     */
 
     public void color(T vertex) {
         // Throw exception when receiving bad parameters.
