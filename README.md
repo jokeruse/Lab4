@@ -186,6 +186,6 @@ Implement a program which generates a directed graph with a text file for our *S
             | containsWords |     String     |      boolean      |
             
 ## Collaborators
-[@ANDI_Mckee](https://github.com/ANDI-Mckee)
+[@AndiMckee](https://github.com/AndiMckee)
 
 [@fake0fan](https://github.com/fake0fan)
