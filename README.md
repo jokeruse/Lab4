@@ -1,5 +1,5 @@
-# SE-Experiment-1
-Implement a program which generates a directed graph with a text file.
+# Text to Graph Generator
+Implement a program which generates a directed graph with a text file for our *Software Engineering Course*.
 
 *This README plays the role of a project documentation.*
 
